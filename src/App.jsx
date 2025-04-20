@@ -4,7 +4,6 @@ import Globe from 'react-globe.gl';
 
 function hashToCoords(name) {
   const hash = CryptoJS.SHA256(name).toString();
-
   const latSegmentHex = hash.slice(0, 8);
   const lonSegmentHex = hash.slice(8, 16);
 
@@ -28,46 +27,43 @@ function hashToCoords(name) {
 function App() {
   const [name, setName] = useState('');
   const [coords, setCoords] = useState(null);
-  const [showDetails, setShowDetails] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const location = hashToCoords(name);
-    setCoords(location);
+    if (!name.trim()) return;
+    const result = hashToCoords(name);
+    setCoords(result);
     setShowDetails(true);
     setCopied(false);
   };
 
   const copyHash = () => {
+    if (!coords) return;
     navigator.clipboard.writeText(coords.hash);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+    <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1>Name to Location 🌍 (3D Globe)</h1>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+      <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter your full name"
-          style={{
-            padding: '10px',
-            fontSize: '16px',
-            marginRight: '10px',
-            width: '300px'
-          }}
+          style={{ padding: 10, fontSize: 16, width: '300px', marginRight: 10 }}
         />
-        <button type="submit" style={{ padding: '10px 20px', fontSize: '16px' }}>
+        <button type="submit" style={{ padding: '10px 20px', fontSize: 16 }}>
           Find My Spot
         </button>
       </form>
 
       {coords && (
         <>
-          <div style={{ height: '600px' }}>
+          <div style={{ height: 500 }}>
             <Globe
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
@@ -80,7 +76,7 @@ function App() {
             />
           </div>
 
-          <div style={{ marginTop: '20px' }}>
+          <div style={{ marginTop: 20 }}>
             <button
               onClick={() => setShowDetails((prev) => !prev)}
               style={{
@@ -100,22 +96,21 @@ function App() {
           {showDetails && (
             <div
               style={{
-                marginTop: '20px',
-                padding: '20px',
-                backgroundColor: '#f5f5f5',
+                marginTop: 20,
+                padding: 20,
+                backgroundColor: '#f0f0f0',
                 borderRadius: '8px',
                 fontFamily: 'monospace'
               }}
             >
               <h2>🧠 Hash Breakdown</h2>
               <p><strong>Entered Name:</strong> {name}</p>
-              <p style={{ display: 'flex', alignItems: 'center' }}>
-                <strong>Full SHA-256 Hash:</strong>
-                <span style={{ marginLeft: '10px', wordBreak: 'break-all' }}>{coords.hash}</span>
+              <p style={{ wordBreak: 'break-all' }}>
+                <strong>SHA-256 Hash:</strong> {coords.hash}
                 <button
                   onClick={copyHash}
                   style={{
-                    marginLeft: '10px',
+                    marginLeft: 10,
                     padding: '4px 8px',
                     fontSize: '12px',
                     cursor: 'pointer'
