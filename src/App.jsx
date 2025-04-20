@@ -31,9 +31,8 @@ function App() {
   const globeEl = useRef();
 
   useEffect(() => {
-    if (globeEl.current) {
-      globeEl.current.width = 1200;
-      globeEl.current.height = 1200;
+    if (globeEl.current && coords) {
+      globeEl.current.pointOfView({ lat: coords.lat, lng: coords.lon, altitude: 1.5 }, 1500);
     }
   }, [coords]);
 
