@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import CryptoJS from 'crypto-js';
 import Globe from 'react-globe.gl';
 
@@ -28,6 +28,14 @@ function App() {
   const [name, setName] = useState('');
   const [coords, setCoords] = useState(null);
   const [copied, setCopied] = useState(false);
+  const globeEl = useRef();
+
+  useEffect(() => {
+    if (globeEl.current) {
+      globeEl.current.width = 400;
+      globeEl.current.height = 400;
+    }
+  }, [coords]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,8 +70,11 @@ function App() {
 
       {coords && (
         <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '100%', alignItems: 'flex-start' }}>
-          <div style={{ flexBasis: '50%', height: 400 }}>
+          <div style={{ flex: '0 0 400px', height: 400 }}>
             <Globe
+              ref={globeEl}
+              width={400}
+              height={400}
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
               pointLat="lat"
@@ -77,7 +88,7 @@ function App() {
 
           <div
             style={{
-              flexBasis: '50%',
+              flex: 1,
               padding: 20,
               backgroundColor: '#f0f0f0',
               borderRadius: '8px',
