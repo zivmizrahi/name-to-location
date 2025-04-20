@@ -36,7 +36,7 @@ function App() {
       {coords && (
         <div style={{ height: '600px', marginTop: 20 }}>
           <Globe
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+            globeImageUrl="https://raw.githubusercontent.com/iamdanfox/earth-textures/main/earth-day.jpg"
             pointsData={[coords]}
             pointLat="lat"
             pointLng="lon"
