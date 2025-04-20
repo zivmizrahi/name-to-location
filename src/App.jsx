@@ -61,8 +61,8 @@ function App() {
       </form>
 
       {coords && (
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-          <div style={{ flex: 1, height: 500 }}>
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', width: '100%' }}>
+          <div style={{ flex: '2 1 0%', height: 500 }}>
             <Globe
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
@@ -77,16 +77,17 @@ function App() {
 
           <div
             style={{
-              flex: 1,
+              flex: '1 1 0%',
               padding: 20,
               backgroundColor: '#f0f0f0',
               borderRadius: '8px',
-              fontFamily: 'monospace'
+              fontFamily: 'monospace',
+              maxWidth: '34%'
             }}
           >
             <h2>🧠 Hash Breakdown</h2>
             <p><strong>Entered Name:</strong> {name}</p>
-            <p style={{ wordBreak: 'break-all' }}>
+            <p style={{ wordBreak: 'break-word' }}>
               <strong>SHA-256 Hash:</strong> {coords.hash}
               <button
                 onClick={copyHash}
