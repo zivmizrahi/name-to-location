@@ -105,10 +105,10 @@ function App() {
   const globeSize = isFullscreen ? window.innerHeight : window.innerWidth < 600 ? 350 : window.innerWidth < 1024 ? 600 : 900;
 
   return (
-    <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
+    <div style={{ padding: 20, fontFamily: 'Arial, sans-serif', textAlign: 'center' }}>
       <h1>Name to Location 🌍 (3D Globe)</h1>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: 20, display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+      <form onSubmit={handleSubmit} style={{ marginBottom: 20, display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -156,6 +156,25 @@ function App() {
               overflow: 'hidden'
             }}
           >
+            {isFullscreen && (
+              <button
+                onClick={toggleFullscreen}
+                style={{
+                  position: 'absolute',
+                  top: 20,
+                  right: 20,
+                  padding: '10px 16px',
+                  backgroundColor: '#dc3545',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  zIndex: 1100
+                }}
+              >
+                ✖
+              </button>
+            )}
             <Globe
               ref={globeEl}
               width={globeSize}
