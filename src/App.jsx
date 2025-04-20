@@ -81,23 +81,26 @@ function App() {
     borderRadius: '6px',
     backgroundColor: '#007BFF',
     color: '#fff',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   };
 
   const inputStyle = {
     padding: '10px 15px',
     fontSize: 16,
-    width: '300px',
+    width: '100%',
+    maxWidth: '300px',
     marginRight: 10,
     borderRadius: '6px',
-    border: '1px solid #ccc'
+    border: '1px solid #ccc',
+    flexShrink: 1
   };
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1>Name to Location 🌍 (3D Globe)</h1>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
+      <form onSubmit={handleSubmit} style={{ marginBottom: 20, display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -120,12 +123,20 @@ function App() {
       </form>
 
       {coordsList.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '100%', alignItems: 'flex-start' }}>
-          <div style={{ flex: '0 0 1200px', height: 1200 }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            width: '100%',
+            alignItems: 'center'
+          }}
+        >
+          <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             <Globe
               ref={globeEl}
-              width={1200}
-              height={1200}
+              width={window.innerWidth < 600 ? 350 : 600}
+              height={window.innerWidth < 600 ? 350 : 600}
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               labelsData={coordsList}
               labelLat="lat"
@@ -142,11 +153,12 @@ function App() {
 
           <div
             style={{
-              flex: 1,
+              width: '100%',
               padding: 20,
               backgroundColor: '#f0f0f0',
               borderRadius: '8px',
-              fontFamily: 'monospace'
+              fontFamily: 'monospace',
+              boxSizing: 'border-box'
             }}
           >
             <h2>🧠 Hash Breakdown</h2>
