@@ -32,8 +32,8 @@ function App() {
 
   useEffect(() => {
     if (globeEl.current) {
-      globeEl.current.width = 400;
-      globeEl.current.height = 400;
+      globeEl.current.width = 1200;
+      globeEl.current.height = 1200;
     }
   }, [coords]);
 
@@ -70,11 +70,11 @@ function App() {
 
       {coords && (
         <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '100%', alignItems: 'flex-start' }}>
-          <div style={{ flex: '0 0 400px', height: 400 }}>
+          <div style={{ flex: '0 0 1200px', height: 1200 }}>
             <Globe
               ref={globeEl}
-              width={400}
-              height={400}
+              width={1200}
+              height={1200}
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
               pointLat="lat"
