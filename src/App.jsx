@@ -30,14 +30,14 @@ function App() {
   const [copied, setCopied] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name.trim()) return;
-    const result = hashToCoords(name);
-    setCoords(result);
-    setCopied(false);
-    setShowDetails(true); // Show by default after submit
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (!name.trim()) return;
+  const result = hashToCoords(name);
+  setCoords(result);
+  setCopied(false);
+  setShowDetails(false); // Hide the breakdown by default
+};
 
   const copyHash = () => {
     if (!coords) return;
