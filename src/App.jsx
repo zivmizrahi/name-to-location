@@ -35,7 +35,7 @@ function App() {
     if (!name.trim()) return;
     const result = hashToCoords(name);
     setCoords(result);
-    setShowDetails(false); // Start hidden
+    setShowDetails(false); // Reset to hidden
     setCopied(false);
   };
 
@@ -67,7 +67,10 @@ function App() {
           {/* Toggle button ABOVE the globe */}
           <div style={{ marginBottom: 10 }}>
             <button
-              onClick={() => setShowDetails((prev) => !prev)}
+              onClick={() => {
+                console.log('Toggle clicked');
+                setShowDetails((prev) => !prev);
+              }}
               style={{
                 padding: '8px 16px',
                 fontSize: '14px',
