@@ -56,12 +56,19 @@ function App() {
 
   const downloadScreenshot = () => {
     if (!globeEl.current) return;
-    const canvas = globeEl.current.renderer().domElement;
-    const image = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = image;
-    link.download = 'my-location-globe.png';
-    link.click();
+    requestAnimationFrame(() => {
+      const canvas = globeEl.current.renderer().domElement;
+      const image = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'my-location-globe.png';
+      link.click();
+    });
+  };
+
+  const clearNames = () => {
+    setCoordsList([]);
+    setCopied(false);
   };
 
   const last = coordsList[coordsList.length - 1];
@@ -81,13 +88,22 @@ function App() {
           Find My Spot
         </button>
         {coordsList.length > 0 && (
-          <button
-            onClick={downloadScreenshot}
-            style={{ padding: '10px 20px', fontSize: 16, marginLeft: 10 }}
-            type="button"
-          >
-            Download Image
-          </button>
+          <>
+            <button
+              onClick={downloadScreenshot}
+              style={{ padding: '10px 20px', fontSize: 16, marginLeft: 10 }}
+              type="button"
+            >
+              Download Image
+            </button>
+            <button
+              onClick={clearNames}
+              style={{ padding: '10px 20px', fontSize: 16, marginLeft: 10 }}
+              type="button"
+            >
+              Clear Names
+            </button>
+          </>
         )}
       </form>
 
