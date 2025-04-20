@@ -62,7 +62,7 @@ function App() {
 
       {coords && (
         <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '100%', alignItems: 'flex-start' }}>
-          <div style={{ flexBasis: '66%', height: 500 }}>
+          <div style={{ flexBasis: '50%', height: 400 }}>
             <Globe
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
@@ -77,7 +77,7 @@ function App() {
 
           <div
             style={{
-              flexBasis: '34%',
+              flexBasis: '50%',
               padding: 20,
               backgroundColor: '#f0f0f0',
               borderRadius: '8px',
