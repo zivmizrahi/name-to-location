@@ -28,7 +28,6 @@ function App() {
   const [name, setName] = useState('');
   const [coords, setCoords] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +35,6 @@ function App() {
     const result = hashToCoords(name);
     setCoords(result);
     setCopied(false);
-    setShowDetails(false); // Hide the breakdown by default
   };
 
   const copyHash = () => {
@@ -64,23 +62,6 @@ function App() {
 
       {coords && (
         <>
-          <div style={{ marginBottom: 10 }}>
-            <button
-              onClick={() => setShowDetails(!showDetails)}
-              style={{
-                padding: '8px 16px',
-                fontSize: '14px',
-                backgroundColor: '#0070f3',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              {showDetails ? 'Hide Calculation' : 'See How It Works'}
-            </button>
-          </div>
-
           <div style={{ height: 500 }}>
             <Globe
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
@@ -93,40 +74,38 @@ function App() {
               atmosphereAltitude={0.25}
             />
           </div>
-        </>
-      )}
 
-      {coords && showDetails && (
-        <div
-          style={{
-            marginTop: 20,
-            padding: 20,
-            backgroundColor: '#f0f0f0',
-            borderRadius: '8px',
-            fontFamily: 'monospace'
-          }}
-        >
-          <h2>🧠 Hash Breakdown</h2>
-          <p><strong>Entered Name:</strong> {name}</p>
-          <p style={{ wordBreak: 'break-all' }}>
-            <strong>SHA-256 Hash:</strong> {coords.hash}
-            <button
-              onClick={copyHash}
-              style={{
-                marginLeft: 10,
-                padding: '4px 8px',
-                fontSize: '12px',
-                cursor: 'pointer'
-              }}
-            >
-              {copied ? 'Copied!' : 'Copy'}
-            </button>
-          </p>
-          <p><strong>Latitude Segment:</strong> {coords.latSegmentHex} → {coords.latSegment}</p>
-          <p><strong>Longitude Segment:</strong> {coords.lonSegmentHex} → {coords.lonSegment}</p>
-          <p><strong>Normalized Latitude:</strong> {coords.lat}°</p>
-          <p><strong>Normalized Longitude:</strong> {coords.lon}°</p>
-        </div>
+          <div
+            style={{
+              marginTop: 20,
+              padding: 20,
+              backgroundColor: '#f0f0f0',
+              borderRadius: '8px',
+              fontFamily: 'monospace'
+            }}
+          >
+            <h2>🧠 Hash Breakdown</h2>
+            <p><strong>Entered Name:</strong> {name}</p>
+            <p style={{ wordBreak: 'break-all' }}>
+              <strong>SHA-256 Hash:</strong> {coords.hash}
+              <button
+                onClick={copyHash}
+                style={{
+                  marginLeft: 10,
+                  padding: '4px 8px',
+                  fontSize: '12px',
+                  cursor: 'pointer'
+                }}
+              >
+                {copied ? 'Copied!' : 'Copy'}
+              </button>
+            </p>
+            <p><strong>Latitude Segment:</strong> {coords.latSegmentHex} → {coords.latSegment}</p>
+            <p><strong>Longitude Segment:</strong> {coords.lonSegmentHex} → {coords.lonSegment}</p>
+            <p><strong>Normalized Latitude:</strong> {coords.lat}°</p>
+            <p><strong>Normalized Longitude:</strong> {coords.lon}°</p>
+          </div>
+        </>
       )}
     </div>
   );
