@@ -102,7 +102,13 @@ function App() {
     flexShrink: 1
   };
 
-  const globeSize = isFullscreen ? Math.min(window.innerWidth, window.innerHeight) : window.innerWidth < 600 ? 350 : window.innerWidth < 1024 ? 600 : 900;
+  const globeSize = isFullscreen
+    ? Math.min(window.innerWidth, window.innerHeight) * window.devicePixelRatio
+    : window.innerWidth < 600
+    ? 350
+    : window.innerWidth < 1024
+    ? 600
+    : 900;
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif', textAlign: 'center' }}>
