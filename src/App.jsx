@@ -77,6 +77,29 @@ function App() {
     setIsFullscreen(!isFullscreen);
   };
 
+  const shareLocation = () => {
+    if (!coordsList.length) return;
+    const { name } = coordsList[coordsList.length - 1];
+    const baseUrl = window.location.href.split('?')[0];
+    const shareUrl = `${baseUrl}?name=${encodeURIComponent(name)}`;
+    const message = `🌍 Check out my globe location for "${name}": ${shareUrl}`;
+
+    if (navigator.share) {
+      navigator.share({ title: 'My Globe Spot', text: message, url: shareUrl }).catch(() => {});
+    } else {
+      const whatsapp = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      const facebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+      const win = window.open('', '_blank');
+      win.document.write(
+        `<div style="padding:20px;font-family:sans-serif;text-align:center;">
+          <h3>Share your location</h3>
+          <a href="${whatsapp}" target="_blank" style="margin:10px;display:inline-block;padding:10px 20px;background:#25D366;color:#fff;border-radius:5px;text-decoration:none;">WhatsApp</a>
+          <a href="${facebook}" target="_blank" style="margin:10px;display:inline-block;padding:10px 20px;background:#3b5998;color:#fff;border-radius:5px;text-decoration:none;">Facebook</a>
+        </div>`
+      );
+    }
+  };
+
   const last = coordsList[coordsList.length - 1];
 
   const buttonStyle = {
@@ -134,6 +157,9 @@ function App() {
             </button>
             <button onClick={toggleFullscreen} style={buttonStyle} type="button">
               {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Globe'}
+            </button>
+            <button onClick={shareLocation} style={buttonStyle} type="button">
+              Share Location
             </button>
           </>
         )}
