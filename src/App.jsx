@@ -16,6 +16,7 @@ function hashToCoords(name) {
   return {
     lat: parseFloat(lat.toFixed(4)),
     lon: parseFloat(lon.toFixed(4)),
+    name,
     hash,
     latSegmentHex,
     lonSegmentHex,
@@ -75,11 +76,14 @@ function App() {
               width={1200}
               height={1200}
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-              pointsData={[coords]}
-              pointLat="lat"
-              pointLng="lon"
-              pointColor={() => 'red'}
-              pointAltitude={() => 0.02}
+              labelsData={[coords]}
+              labelLat="lat"
+              labelLng="lon"
+              labelText={() => coords.name}
+              labelSize={1.2}
+              labelDotRadius={0.4}
+              labelColor={() => 'rgba(255, 0, 0, 0.75)'}
+              labelAltitude={0.01}
               atmosphereColor="skyblue"
               atmosphereAltitude={0.25}
             />
