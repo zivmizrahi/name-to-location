@@ -96,6 +96,8 @@ function App() {
     flexShrink: 1
   };
 
+  const globeSize = window.innerWidth < 600 ? 350 : window.innerWidth < 1024 ? 600 : 900;
+
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1>Name to Location 🌍 (3D Globe)</h1>
@@ -135,8 +137,8 @@ function App() {
           <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             <Globe
               ref={globeEl}
-              width={window.innerWidth < 600 ? 350 : 600}
-              height={window.innerWidth < 600 ? 350 : 600}
+              width={globeSize}
+              height={globeSize}
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               labelsData={coordsList}
               labelLat="lat"
