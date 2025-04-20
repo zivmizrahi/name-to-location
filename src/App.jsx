@@ -73,6 +73,26 @@ function App() {
 
   const last = coordsList[coordsList.length - 1];
 
+  const buttonStyle = {
+    padding: '10px 20px',
+    fontSize: 16,
+    margin: '5px 10px 5px 0',
+    border: 'none',
+    borderRadius: '6px',
+    backgroundColor: '#007BFF',
+    color: '#fff',
+    cursor: 'pointer'
+  };
+
+  const inputStyle = {
+    padding: '10px 15px',
+    fontSize: 16,
+    width: '300px',
+    marginRight: 10,
+    borderRadius: '6px',
+    border: '1px solid #ccc'
+  };
+
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1>Name to Location 🌍 (3D Globe)</h1>
@@ -82,25 +102,17 @@ function App() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter your full name"
-          style={{ padding: 10, fontSize: 16, width: '300px', marginRight: 10 }}
+          style={inputStyle}
         />
-        <button type="submit" style={{ padding: '10px 20px', fontSize: 16 }}>
+        <button type="submit" style={buttonStyle}>
           Find My Spot
         </button>
         {coordsList.length > 0 && (
           <>
-            <button
-              onClick={downloadScreenshot}
-              style={{ padding: '10px 20px', fontSize: 16, marginLeft: 10 }}
-              type="button"
-            >
+            <button onClick={downloadScreenshot} style={buttonStyle} type="button">
               Download Image
             </button>
-            <button
-              onClick={clearNames}
-              style={{ padding: '10px 20px', fontSize: 16, marginLeft: 10 }}
-              type="button"
-            >
+            <button onClick={clearNames} style={buttonStyle} type="button">
               Clear Names
             </button>
           </>
@@ -147,7 +159,11 @@ function App() {
                   marginLeft: 10,
                   padding: '4px 8px',
                   fontSize: '12px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  backgroundColor: '#28a745',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: '#fff'
                 }}
               >
                 {copied ? 'Copied!' : 'Copy'}
