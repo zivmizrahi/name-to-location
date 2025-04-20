@@ -29,7 +29,9 @@ function App() {
   const [name, setName] = useState('');
   const [coordsList, setCoordsList] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const globeEl = useRef();
+  const globeContainerRef = useRef();
 
   useEffect(() => {
     if (globeEl.current && coordsList.length > 0) {
@@ -71,6 +73,10 @@ function App() {
     setCopied(false);
   };
 
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
+
   const last = coordsList[coordsList.length - 1];
 
   const buttonStyle = {
@@ -96,7 +102,7 @@ function App() {
     flexShrink: 1
   };
 
-  const globeSize = window.innerWidth < 600 ? 350 : window.innerWidth < 1024 ? 600 : 900;
+  const globeSize = isFullscreen ? window.innerHeight : window.innerWidth < 600 ? 350 : window.innerWidth < 1024 ? 600 : 900;
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
@@ -120,6 +126,9 @@ function App() {
             <button onClick={clearNames} style={buttonStyle} type="button">
               Clear Names
             </button>
+            <button onClick={toggleFullscreen} style={buttonStyle} type="button">
+              {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Globe'}
+            </button>
           </>
         )}
       </form>
@@ -134,7 +143,19 @@ function App() {
             alignItems: 'center'
           }}
         >
-          <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
+          <div
+            ref={globeContainerRef}
+            style={{
+              width: isFullscreen ? '100vw' : '100%',
+              height: isFullscreen ? '100vh' : 'auto',
+              position: isFullscreen ? 'fixed' : 'relative',
+              top: isFullscreen ? 0 : 'auto',
+              left: isFullscreen ? 0 : 'auto',
+              zIndex: isFullscreen ? 1000 : 'auto',
+              backgroundColor: isFullscreen ? 'black' : 'transparent',
+              overflow: 'hidden'
+            }}
+          >
             <Globe
               ref={globeEl}
               width={globeSize}
@@ -190,6 +211,10 @@ function App() {
           </div>
         </div>
       )}
+
+      <footer style={{ textAlign: 'center', marginTop: 40, fontSize: 14, color: '#888' }}>
+        Vibe-coded by Ziv Mizrahi
+      </footer>
     </div>
   );
 }
