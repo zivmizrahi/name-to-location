@@ -62,7 +62,7 @@ function App() {
 
       {coords && (
         <>
-          <div style={{ height: 500, marginBottom: 40 }}>
+          <div style={{ height: 500, marginBottom: 40, position: 'relative', zIndex: 1 }}>
             <Globe
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
@@ -83,7 +83,7 @@ function App() {
               borderRadius: '8px',
               fontFamily: 'monospace',
               position: 'relative',
-              zIndex: 2
+              zIndex: 0
             }}
           >
             <h2>🧠 Hash Breakdown</h2>
