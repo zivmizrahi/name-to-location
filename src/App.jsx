@@ -27,30 +27,44 @@ function hashToCoords(name) {
 
 function App() {
   const [name, setName] = useState('');
-  const [coords, setCoords] = useState(null);
+  const [coordsList, setCoordsList] = useState([]);
   const [copied, setCopied] = useState(false);
   const globeEl = useRef();
 
   useEffect(() => {
-    if (globeEl.current && coords) {
-      globeEl.current.pointOfView({ lat: coords.lat, lng: coords.lon, altitude: 1.5 }, 1500);
+    if (globeEl.current && coordsList.length > 0) {
+      const last = coordsList[coordsList.length - 1];
+      globeEl.current.pointOfView({ lat: last.lat, lng: last.lon, altitude: 1.5 }, 1500);
     }
-  }, [coords]);
+  }, [coordsList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) return;
     const result = hashToCoords(name);
-    setCoords(result);
+    setCoordsList((prev) => [...prev, result]);
     setCopied(false);
   };
 
   const copyHash = () => {
-    if (!coords) return;
-    navigator.clipboard.writeText(coords.hash);
+    if (coordsList.length === 0) return;
+    const last = coordsList[coordsList.length - 1];
+    navigator.clipboard.writeText(last.hash);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
+
+  const downloadScreenshot = () => {
+    if (!globeEl.current) return;
+    const canvas = globeEl.current.renderer().domElement;
+    const image = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = image;
+    link.download = 'my-location-globe.png';
+    link.click();
+  };
+
+  const last = coordsList[coordsList.length - 1];
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
@@ -66,9 +80,18 @@ function App() {
         <button type="submit" style={{ padding: '10px 20px', fontSize: 16 }}>
           Find My Spot
         </button>
+        {coordsList.length > 0 && (
+          <button
+            onClick={downloadScreenshot}
+            style={{ padding: '10px 20px', fontSize: 16, marginLeft: 10 }}
+            type="button"
+          >
+            Download Image
+          </button>
+        )}
       </form>
 
-      {coords && (
+      {coordsList.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '100%', alignItems: 'flex-start' }}>
           <div style={{ flex: '0 0 1200px', height: 1200 }}>
             <Globe
@@ -76,10 +99,10 @@ function App() {
               width={1200}
               height={1200}
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-              labelsData={[coords]}
+              labelsData={coordsList}
               labelLat="lat"
               labelLng="lon"
-              labelText={() => coords.name}
+              labelText={(d) => d.name}
               labelSize={1.2}
               labelDotRadius={0.4}
               labelColor={() => 'rgba(255, 0, 0, 0.75)'}
@@ -99,9 +122,9 @@ function App() {
             }}
           >
             <h2>🧠 Hash Breakdown</h2>
-            <p><strong>Entered Name:</strong> {name}</p>
+            <p><strong>Entered Name:</strong> {last.name}</p>
             <p style={{ wordBreak: 'break-word' }}>
-              <strong>SHA-256 Hash:</strong> {coords.hash}
+              <strong>SHA-256 Hash:</strong> {last.hash}
               <button
                 onClick={copyHash}
                 style={{
@@ -114,10 +137,10 @@ function App() {
                 {copied ? 'Copied!' : 'Copy'}
               </button>
             </p>
-            <p><strong>Latitude Segment:</strong> {coords.latSegmentHex} → {coords.latSegment}</p>
-            <p><strong>Longitude Segment:</strong> {coords.lonSegmentHex} → {coords.lonSegment}</p>
-            <p><strong>Normalized Latitude:</strong> {coords.lat}°</p>
-            <p><strong>Normalized Longitude:</strong> {coords.lon}°</p>
+            <p><strong>Latitude Segment:</strong> {last.latSegmentHex} → {last.latSegment}</p>
+            <p><strong>Longitude Segment:</strong> {last.lonSegmentHex} → {last.lonSegment}</p>
+            <p><strong>Normalized Latitude:</strong> {last.lat}°</p>
+            <p><strong>Normalized Longitude:</strong> {last.lon}°</p>
           </div>
         </div>
       )}
