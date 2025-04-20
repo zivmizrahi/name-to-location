@@ -61,8 +61,8 @@ function App() {
       </form>
 
       {coords && (
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start', width: '100%' }}>
-          <div style={{ flex: '2 1 0%', height: 500 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', width: '100%' }}>
+          <div style={{ flex: '0 0 66%', height: 500, minWidth: '300px' }}>
             <Globe
               globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
               pointsData={[coords]}
@@ -77,12 +77,12 @@ function App() {
 
           <div
             style={{
-              flex: '1 1 0%',
+              flex: '0 0 34%',
               padding: 20,
               backgroundColor: '#f0f0f0',
               borderRadius: '8px',
               fontFamily: 'monospace',
-              maxWidth: '34%'
+              minWidth: '250px'
             }}
           >
             <h2>🧠 Hash Breakdown</h2>
