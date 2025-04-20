@@ -35,7 +35,7 @@ function App() {
     if (!name.trim()) return;
     const result = hashToCoords(name);
     setCoords(result);
-    setShowDetails(true);
+    setShowDetails(false); // Start hidden
     setCopied(false);
   };
 
@@ -49,6 +49,7 @@ function App() {
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1>Name to Location 🌍 (3D Globe)</h1>
+
       <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
         <input
           value={name}
@@ -63,20 +64,8 @@ function App() {
 
       {coords && (
         <>
-          <div style={{ height: 500 }}>
-            <Globe
-              globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-              pointsData={[coords]}
-              pointLat="lat"
-              pointLng="lon"
-              pointColor={() => 'red'}
-              pointAltitude={() => 0.02}
-              atmosphereColor="skyblue"
-              atmosphereAltitude={0.25}
-            />
-          </div>
-
-          <div style={{ marginTop: 20 }}>
+          {/* Toggle button ABOVE the globe */}
+          <div style={{ marginBottom: 10 }}>
             <button
               onClick={() => setShowDetails((prev) => !prev)}
               style={{
@@ -91,6 +80,19 @@ function App() {
             >
               {showDetails ? 'Hide Calculation' : 'See How It Works'}
             </button>
+          </div>
+
+          <div style={{ height: 500 }}>
+            <Globe
+              globeImageUrl="https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+              pointsData={[coords]}
+              pointLat="lat"
+              pointLng="lon"
+              pointColor={() => 'red'}
+              pointAltitude={() => 0.02}
+              atmosphereColor="skyblue"
+              atmosphereAltitude={0.25}
+            />
           </div>
 
           {showDetails && (
